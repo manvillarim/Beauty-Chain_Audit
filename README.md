@@ -173,11 +173,11 @@ Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os re
 
 # Outras Vulnerabilidades
 
-Também foi analisado outras possíveis vulnerabilidades, como inconscistência do owner no Ownable e as funções de pausar o contrato, mas todas se demonstraram confiáveis.
+Também foi analisado outras possíveis vulnerabilidades, como inconsistência do owner no Ownable e as funções de pausar o contrato, mas todas se demonstraram confiáveis.
 
 # Resultados
 
-**Nota-se que o BeautyChain tem diversas vulnerabilidades, demonstrando que mesmo na blockchain, um contrato não está livre de erros e, consequentemente, há grandes riscos em sua utilização. ALém disso, mesmo sem ter capacidade de analisar contratos longos de forma inteira, o SMT Checker se prova como uma ferramenta poderosa para auditar contratos.**
+**Nota-se que o BeautyChain tem diversas vulnerabilidades, demonstrando que mesmo na blockchain, um contrato não está livre de erros e, consequentemente, há grandes riscos em sua utilização. Além disso, mesmo sem ter capacidade de analisar contratos longos de forma inteira, o SMT Checker se prova como uma ferramenta poderosa para auditar contratos.**
 
 
 
