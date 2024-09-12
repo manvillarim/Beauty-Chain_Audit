@@ -19,7 +19,7 @@
 
 **1. Overflow e Underflow**
 
-Quando uma operação matemática resultado em um valor máximo ou mínimo ao que o tipo de dado suporta. 
+Quando uma operação matemática resulta em um valor máximo ou mínimo ao que o tipo de dado suporta. 
 
 Em uma análise visual do contrato, percebe-se um grande risco de overflow na seguinte função:
 
