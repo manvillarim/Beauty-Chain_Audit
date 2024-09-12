@@ -130,33 +130,56 @@ Na função aprove também é percebida outra vulnerabilidade, ao SMT ter esse r
     135 |         assert(_allowed[msg.sender][_spender] >= previousAllowance);
         |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Como o contrato não tem nenhuma função de atualizar a allowance ou pausar essa função, ela está suscetível a ataques de Race Condition.
-A race condition pode ocorrer na função approve porque o contrato permite que um endereço (_spender) gaste um valor específico de tokens em nome do proprietário (msg.sender). O problema surge quando o valor permitido (allowance) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada.
+## Race Condition na Função `approve`
 
-2. Cenário de Ataque:
+Como o contrato não possui uma função para atualizar a allowance ou pausar essa função, ele está suscetível a ataques de **Race Condition**. 
 
-Imagine um contrato atacante que explora a race condition ao tentar usar o valor de allowance antes de ser alterado. O fluxo pode ser o seguinte:
+### O que é uma Race Condition?
 
-Transação Inicial: O proprietário (msg.sender) chama a função approve para autorizar o spender a gastar um valor específico de tokens.
+A **race condition** ocorre quando a execução do contrato depende da ordem de execução de transações concorrentes, o que pode levar a comportamentos inesperados se essas transações não forem geridas adequadamente.
 
-Transação de Ataque: Um contrato malicioso detecta que a função approve está sendo chamada e também chama approve com um novo valor para o mesmo spender.
+### Cenário de Ataque
 
-Condição de Corrida: Se a primeira transação ainda não foi confirmada e a segunda transação é executada, o atacante pode usar a allowance anterior (antes da atualização) para transferir tokens antes que o valor permitido seja redefinido.
+A race condition pode ocorrer na função `approve` porque o contrato permite que um endereço (`_spender`) gaste um valor específico de tokens em nome do proprietário (`msg.sender`). O problema surge quando o valor permitido (`allowance`) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada.
 
+#### Fluxo do Ataque:
 
-Para solucionar essas vulnerabilidades de maneira simples, poderiamos bloquear o endereço nulo e resetar o allowance a cada chamada da função:
+1. **Transação Inicial:** 
+   - O proprietário (`msg.sender`) chama a função `approve` para autorizar o `_spender` a gastar um valor específico de tokens.
 
-    function approve(address _spender, uint256 _value) public virtual override returns (bool) {
-        require(_spender != address(0), "Invalid address");
-    
-        if (_value > 0) {
-            _allowed[msg.sender][_spender] = 0;
-        }
-        
-        _allowed[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
-        return true;
+2. **Transação de Ataque:** 
+   - Um contrato malicioso detecta que a função `approve` está sendo chamada e também envia uma transação para chamar `approve` com um novo valor para o mesmo `_spender`.
+
+3. **Condição de Corrida:** 
+   - Se a primeira transação ainda não foi confirmada e a segunda transação é executada, o atacante pode usar a `allowance` anterior (antes da atualização) para transferir tokens antes que o valor permitido seja redefinido.
+
+### Exemplo Visual
+
+1. **Estado Inicial:** O proprietário aprova um valor de `1000` para o `_spender`.
+2. **Ataque:** Um contrato malicioso detecta a chamada e aprova um valor de `5000` para o mesmo `_spender`.
+3. **Resultado:** O atacante pode gastar `1000` tokens antes que o valor seja atualizado para `5000`.
+
+### Prevenção
+
+Para mitigar esse problema, recomenda-se:
+
+- **Resetar a Allowance:** 
+  - Antes de definir um novo valor de allowance, definir a allowance atual para zero. Isso evita que valores antigos sejam utilizados enquanto uma nova transação está pendente.
+
+```solidity
+function approve(address _spender, uint256 _value) public virtual override returns (bool) {
+    require(_spender != address(0), "Invalid address");
+
+    // Reset allowance to zero before setting new value
+    if (_value > 0) {
+        _allowed[msg.sender][_spender] = 0;
     }
+
+    _allowed[msg.sender][_spender] = _value;
+    emit Approval(msg.sender, _spender, _value);
+    return true;
+}```
+
 
 Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os resultados não só se repetem, como ele também identifica novas vulnerabilidades:
 
