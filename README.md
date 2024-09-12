@@ -81,7 +81,7 @@ Outra possível vulnerabilidade seria se algum endereço do array `_receivers` f
 # ERC20
 
 Em uma primeira análise, ao verificar o contrato `StandartToken`, também é notada uma possível vulnerabilidade da função `approve`, ao não restringir o endereço do `spender` ser diferente de nulo. 
-    
+
     function approve(address _spender, uint256 _value) public virtual override returns (bool) {
         assert(_spender != address(0));
         uint256 previousAllowance = _allowed[msg.sender][_spender];
@@ -166,19 +166,19 @@ Para mitigar esse problema, recomenda-se:
 - **Resetar a Allowance:** 
   - Antes de definir um novo valor de allowance, definir a allowance atual para zero. Isso evita que valores antigos sejam utilizados enquanto uma nova transação está pendente.
 
-```solidity
-function approve(address _spender, uint256 _value) public virtual override returns (bool) {
-    require(_spender != address(0), "Invalid address");
-
-    // Reset allowance to zero before setting new value
-    if (_value > 0) {
-        _allowed[msg.sender][_spender] = 0;
+    ```solidity
+    function approve(address _spender, uint256 _value) public virtual override returns (bool) {
+        require(_spender != address(0), "Invalid address");
+    
+        // Reset allowance to zero before setting new value
+        if (_value > 0) {
+            _allowed[msg.sender][_spender] = 0;
+        }
+    
+        _allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
     }
-
-    _allowed[msg.sender][_spender] = _value;
-    emit Approval(msg.sender, _spender, _value);
-    return true;
-}```
 
 
 Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os resultados não só se repetem, como ele também identifica novas vulnerabilidades:
