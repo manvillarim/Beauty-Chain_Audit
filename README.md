@@ -150,6 +150,14 @@ Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os re
 ![Imagem do Projeto](https://github.com/manvillarim/Beauty-Chain_Audit/blob/main/lib/imagem.png)
 
 
+# Outras Vulnerabilidades
+
+Também foi analisado outras possíveis vulnerabilidades, como inconscistência do owner no Ownable e as funções de pausar o contrato, mas todas se demonstraram confiáveis.
+
+# Resultados
+
+**Nota-se que, mesmo sem ter capacidade de analisar contratos longos de forma inteira, o SMT Checker é uma ferramenta poderosa para auditar contratos, além de poupar a criação de testes, que além do trabalho humano, também podem ser suscetíveis a falhas humanas.**
+
 
 
 
