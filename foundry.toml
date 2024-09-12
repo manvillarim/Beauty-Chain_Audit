@@ -3,4 +3,18 @@ src = "src"
 out = "out"
 libs = ["lib"]
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+[profile.default.model_checker]
+extCalls = "trusted"
+engine = "chc"
+solvers = [ "z3" ]
+timeout = 0
+targets = [
+	"overflow"
+]
+showProved = true
+showUnproved = true
+showUnsupported = true
+showProvedSafe = true
+
+contracts = { "src/BEC.sol" = ["PausableToken"] }
+
