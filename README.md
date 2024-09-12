@@ -122,7 +122,7 @@ Ao aplicar o checker, a suspeita é confirmada:
     130 |         assert(_spender != address(0));
         |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Na função aprove também é percebida outra vulnerabilidade, ao SMT ter esse resultado:
+Na função aprove também é percebida uma race condition, ao SMT ter esse resultado:
 
     Warning (6328): CHC: Assertion violation happens here.
        --> src/BecReentrancy.sol:135:9:
@@ -142,18 +142,7 @@ A **race condition** ocorre quando a execução do contrato depende da ordem de 
 
 A race condition pode ocorrer na função `approve` porque o contrato permite que um endereço (`_spender`) gaste um valor específico de tokens em nome do proprietário (`msg.sender`). O problema surge quando o valor permitido (`allowance`) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada.
 
-#### Fluxo do Ataque:
-
-1. **Transação Inicial:** 
-   - O proprietário (`msg.sender`) chama a função `approve` para autorizar o `_spender` a gastar um valor específico de tokens.
-
-2. **Transação de Ataque:** 
-   - Um contrato malicioso detecta que a função `approve` está sendo chamada e também envia uma transação para chamar `approve` com um novo valor para o mesmo `_spender`.
-
-3. **Condição de Corrida:** 
-   - Se a primeira transação ainda não foi confirmada e a segunda transação é executada, o atacante pode usar a `allowance` anterior (antes da atualização) para transferir tokens antes que o valor permitido seja redefinido.
-
-### Exemplo Visual
+### Exemplo
 
 1. **Estado Inicial:** O proprietário aprova um valor de `1000` para o `_spender`.
 2. **Ataque:** Um contrato malicioso detecta a chamada e aprova um valor de `5000` para o mesmo `_spender`.
