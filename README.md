@@ -132,10 +132,6 @@ Na função aprove também é percebida uma race condition, ao SMT ter esse resu
 
 ## Race Condition na Função `approve`
 
-Como o contrato não possui uma função para atualizar a allowance ou pausar essa função, ele está suscetível a ataques de **Race Condition**. 
-
-### O que é uma Race Condition?
-
 A **race condition** ocorre quando a execução do contrato depende da ordem de execução de transações concorrentes, o que pode levar a comportamentos inesperados se essas transações não forem geridas adequadamente.
 
 ### Cenário de Ataque
