@@ -13,7 +13,7 @@
 
 ## Sobre o BeautyChain
 
-**O arquivo Bec.sol compõe contratos que formam um token ERC20 básico, com algumas funcionalidades adicionais que deveriam garantir a segurança do contrato. Como o SMT Checker não suporta analisar o arquivo completo, os outros arquivos do src são as versões otimizadas para a análise de cada vulnerabilidade. Além disso, foi necessário dar um upgrade no contrato para versão 0.8 para ficar compatível com a ferramenta, mas a lógica pemaneceu inalterada.**
+**O arquivo Bec.sol compõe contratos que formam um token ERC20 básico, com algumas funcionalidades adicionais que deveriam garantir a segurança do contrato. Como o SMT Checker não suporta analisar o arquivo completo, os outros arquivos do src são as versões otimizadas para a análise de cada vulnerabilidade. Além disso, foi necessário dar um upgrade no contrato para versão 0.8 para ficar compatível com a ferramenta, mas a lógica permaneceu inalterada.**
 
 # Vulnerabilidades
 
@@ -21,7 +21,7 @@
 
 Quando uma operação matemática resulta em um valor máximo ou mínimo ao que o tipo de dado suporta. 
 
-Em uma análise visual do contrato, percebe-se um grande risco de overflow na seguinte função:
+Em uma análise visual do contrato, percebe-se um grande risco de overflow na função seguinte:
 
     function batchTransfer(address[] calldata _receivers, uint256 _value) public returns (bool) {
         uint256 cnt = _receivers.length;
