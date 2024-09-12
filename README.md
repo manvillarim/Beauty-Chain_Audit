@@ -36,7 +36,7 @@ Em uma análise visual do contrato, percebe-se um grande risco de overflow na se
         }
         return true;
     }
-Na linha 'uint256 amount = cnt * _value;' não foi utilizada a função mul da SafeMath, que iria prevenir o overflow, sendo assim necessário aplicar o SMT Checker.
+Na linha `uint256 amount = cnt * _value;` não foi utilizada a função mul da SafeMath, que iria prevenir o overflow, sendo assim necessário aplicar o SMT Checker.
 Após a análise(colocando o alvo como overflow no foundry.toml), os resultados confirmaram a suspeita:
      
       Warning (4984): CHC: Overflow (resulting value larger than 2**256 - 1) happens here.
