@@ -130,7 +130,20 @@ Na função aprove também é percebida outra vulnerabilidade, ao SMT ter esse r
     135 |         assert(_allowed[msg.sender][_spender] >= previousAllowance);
         |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Como o contrato não tem nenhuma função de atualizar a allowance ou pausar essa função, ela está suscetível a ataques de Race Condition, uma vez que um contrato atacante pode aproveitar o intervalo entre diferentes allowance, e retirar mais fundos do que deveria.
+Como o contrato não tem nenhuma função de atualizar a allowance ou pausar essa função, ela está suscetível a ataques de Race Condition.
+A race condition pode ocorrer na função approve porque o contrato permite que um endereço (_spender) gaste um valor específico de tokens em nome do proprietário (msg.sender). O problema surge quando o valor permitido (allowance) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada.
+
+2. Cenário de Ataque:
+
+Imagine um contrato atacante que explora a race condition ao tentar usar o valor de allowance antes de ser alterado. O fluxo pode ser o seguinte:
+
+Transação Inicial: O proprietário (msg.sender) chama a função approve para autorizar o spender a gastar um valor específico de tokens.
+
+Transação de Ataque: Um contrato malicioso detecta que a função approve está sendo chamada e também chama approve com um novo valor para o mesmo spender.
+
+Condição de Corrida: Se a primeira transação ainda não foi confirmada e a segunda transação é executada, o atacante pode usar a allowance anterior (antes da atualização) para transferir tokens antes que o valor permitido seja redefinido.
+
+
 Para solucionar essas vulnerabilidades de maneira simples, poderiamos bloquear o endereço nulo e resetar o allowance a cada chamada da função:
 
     function approve(address _spender, uint256 _value) public virtual override returns (bool) {
