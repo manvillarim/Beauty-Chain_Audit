@@ -156,7 +156,7 @@ Também foi analisado outras possíveis vulnerabilidades, como inconscistência 
 
 # Resultados
 
-**Nota-se que, mesmo sem ter capacidade de analisar contratos longos de forma inteira, o SMT Checker é uma ferramenta poderosa para auditar contratos, além de poupar a criação de testes, que além do trabalho humano, também podem ser suscetíveis a falhas humanas.**
+**Nota-se que o BeautyChain tem diversas vulnerabilidades, demonstrando que mesmo na blockchain, um contrato não está livre de erros e, consequentemente, há grandes riscos em sua utilização. ALém disso, mesmo sem ter capacidade de analisar contratos longos de forma inteira, o SMT Checker se prova como uma ferramenta poderosa para auditar contratos.**
 
 
 
