@@ -17,7 +17,7 @@
 
 # Vulnerabilidades
 
-**1. Overflow e Underflow**
+# 1. Overflow e Underflow
 
 Quando uma operação matemática resulta em um valor máximo ou mínimo ao que o tipo de dado suporta. 
 
@@ -78,7 +78,7 @@ Outra possível vulnerabilidade seria se algum endereço do array `_receivers` f
     253 |             assert(_receivers[i] != address(0));
         |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**ERC20**
+# ERC20
 
 Em uma primeira análise, ao verificar o contrato `StandartToken`, também é notada uma possível vulnerabilidade da função `approve`, ao não restringir o endereço do `spender` ser diferente de nulo. 
     
@@ -130,7 +130,7 @@ Na função aprove também é percebida outra vulnerabilidade, ao SMT ter esse r
     135 |         assert(_allowed[msg.sender][_spender] >= previousAllowance);
         |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Como o contrato não tem nenhuma função de atualizar a allowance ou pausar essa função, ela está suscetível a ataques de Race Condition, uma vez que um contrato atacante pode aproveitar o intervalo entre diferentes allowance, e retirar mais fundos do que poderia.
+Como o contrato não tem nenhuma função de atualizar a allowance ou pausar essa função, ela está suscetível a ataques de Race Condition, uma vez que um contrato atacante pode aproveitar o intervalo entre diferentes allowance, e retirar mais fundos do que deveria.
 Para solucionar essas vulnerabilidades de maneira simples, poderiamos bloquear o endereço nulo e resetar o allowance a cada chamada da função:
 
     function approve(address _spender, uint256 _value) public virtual override returns (bool) {
@@ -145,6 +145,7 @@ Para solucionar essas vulnerabilidades de maneira simples, poderiamos bloquear o
         return true;
     }
 
+Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os resultados também se repetem:
 
 
 
