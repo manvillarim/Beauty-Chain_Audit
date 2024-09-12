@@ -145,7 +145,10 @@ Para solucionar essas vulnerabilidades de maneira simples, poderiamos bloquear o
         return true;
     }
 
-Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os resultados também se repetem:
+Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os resultados não só se repetem, como ele também identifica novas vulnerabilidades:
+
+![Imagem do Projeto](https://github.com/manvillarim/Beauty-Chain_Audit/blob/main/lib/imagem.png)
+
 
 
 
