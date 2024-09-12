@@ -122,7 +122,7 @@ Ao aplicar o checker, a suspeita é confirmada:
     130 |         assert(_spender != address(0));
         |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Na função aprove também é percebida uma race condition, ao SMT ter esse resultado:
+Além disso, ao verificar a seguinte asserção como falsa, o SMT checker também mostra uma Race Condition na função approve.
 
     Warning (6328): CHC: Assertion violation happens here.
        --> src/BecReentrancy.sol:135:9:
