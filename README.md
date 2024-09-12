@@ -155,7 +155,6 @@ Para mitigar esse problema, recomenda-se:
     function approve(address _spender, uint256 _value) public virtual override returns (bool) {
         require(_spender != address(0), "Invalid address");
     
-        // Reset allowance to zero before setting new value
         if (_value > 0) {
             _allowed[msg.sender][_spender] = 0;
         }
