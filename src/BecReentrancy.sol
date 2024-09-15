@@ -114,12 +114,23 @@ contract StandardToken is ERC20, BasicToken {
         require(_value > 0 && _value <= _balances[_from], "Insufficient balance");
         require(_value <= _allowed[_from][msg.sender], "Allowance exceeded");
 
+        uint256 previousBalanceFrom = _balances[_from];
+        uint256 previousBalanceTo = _balances[_to];
+        uint256 previousAllowance = _allowed[_from][msg.sender];
+
         _balances[_from] = _balances[_from].sub(_value);
         _balances[_to] = _balances[_to].add(_value);
         _allowed[_from][msg.sender] = _allowed[_from][msg.sender].sub(_value);
+
+        // Asserts to check for race conditions
+        assert(_balances[_from] == previousBalanceFrom - _value);
+        assert(_balances[_to] == previousBalanceTo + _value);
+        assert(_allowed[_from][msg.sender] == previousAllowance - _value);
+
         emit Transfer(_from, _to, _value);
         return true;
     }
+
 
     /**
      * @dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
@@ -128,12 +139,13 @@ contract StandardToken is ERC20, BasicToken {
      */
     function approve(address _spender, uint256 _value) public virtual override returns (bool) {
         assert(_spender != address(0));
-        uint256 previousAllowance = _allowed[msg.sender][_spender];
+
         _allowed[msg.sender][_spender] = _value;
+
+        // Assert to check for race conditions
+        assert(_allowed[msg.sender][_spender] == _value);
+
         emit Approval(msg.sender, _spender, _value);
-        
-        assert(_allowed[msg.sender][_spender] >= previousAllowance);
-        
         return true;
     }
 
