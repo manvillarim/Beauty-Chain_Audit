@@ -122,7 +122,6 @@ contract StandardToken is ERC20, BasicToken {
         _balances[_to] = _balances[_to].add(_value);
         _allowed[_from][msg.sender] = _allowed[_from][msg.sender].sub(_value);
 
-        // Asserts to check for race conditions
         assert(_balances[_from] == previousBalanceFrom - _value);
         assert(_balances[_to] == previousBalanceTo + _value);
         assert(_allowed[_from][msg.sender] == previousAllowance - _value);
@@ -142,7 +141,6 @@ contract StandardToken is ERC20, BasicToken {
 
         _allowed[msg.sender][_spender] = _value;
 
-        // Assert to check for race conditions
         assert(_allowed[msg.sender][_spender] == _value);
 
         emit Approval(msg.sender, _spender, _value);
