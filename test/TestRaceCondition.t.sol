@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
-import "src/BecReentrancy.sol"; // Substitua pelo caminho do seu contrato
+import "src/BecReentrancy.sol";
 
 contract RaceConditionTest is Test {
     StandardToken token;
