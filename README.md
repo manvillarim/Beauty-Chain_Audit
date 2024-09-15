@@ -86,9 +86,6 @@ Em uma primeira análise, ao verificar o contrato `StandartToken`, também é no
         assert(_spender != address(0));
         uint256 previousAllowance = _allowed[msg.sender][_spender];
         _allowed[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
-        
-        assert(_allowed[msg.sender][_spender] >= previousAllowance);
         
         return true;
     }
