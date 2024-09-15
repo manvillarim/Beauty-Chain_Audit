@@ -146,12 +146,15 @@ Em dúvida, resolvi aplicar um teste, `TestRaceConditional.t.sol`, disponível n
     
     Encountered a total of 1 failing tests, 0 tests succeeded
 
+Isso gera uma discussão interessante, em como abordar problemas concorrentes usando o SMT Checker. Apesar das asserções simples terem funcionado em um problema de reentrância básico do experimento anterior, essa abordagem se mostrou ineficiente agora.
+
 ### Prevenção
 
 Para mitigar esse problema, recomenda-se:
 
 - **Resetar a Allowance:** 
-  - Antes de definir um novo valor de allowance, definir a allowance atual para zero. Isso evita que valores antigos sejam utilizados enquanto uma nova transação está pendente.
+  - Para uma solução simples, o ideal é definir a allowance atual para zero no inicio de cada transação. Isso evita que valores antigos sejam utilizados enquanto uma nova transação está pendente.
+  - Contudo, essa forma gera um gasto desnecessário de gás. Uma solução comum é a criação de funções increaseAllowance e decreaseAllowance.
 
     ```solidity
     function approve(address _spender, uint256 _value) public virtual override returns (bool) {
