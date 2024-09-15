@@ -172,6 +172,11 @@ Para mitigar esse problema, recomenda-se:
 
 Também foi analisado outras possíveis vulnerabilidades, como inconsistência do owner no Ownable e as funções de pausar o contrato, mas todas se demonstraram confiáveis.
 
+# ERCx
+
+Para informações adicionais, o contrato também foi aplicado no [ERCx](https://ercx.runtimeverification.com/). Os resultados confirmaram a auditoria e também levantaram outros pontos(não necessariamente vulnerabilidades).
+[imagem](https://github.com/manvillarim/Beauty-Chain_Audit/blob/main/lib/imagem.png)
+
 # Resultados
 
 **Nota-se que o SMT Checker é uma ferramenta poderosa para auditar contratos, mesmo com a limitação do tamanho do código. Além disso, a falha de encontrar a race condition levanta questões interessantes sobre a abordargem de vulnerabilidades concorrentes, que será explorado nos próximos experimentos.**
