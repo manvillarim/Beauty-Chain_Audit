@@ -122,27 +122,29 @@ Ao aplicar o checker, a suspeita é confirmada:
     130 |         assert(_spender != address(0));
         |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Além disso, ao verificar a seguinte asserção como falsa, o SMT checker também mostra uma Race Condition na função approve.
-
-    Warning (6328): CHC: Assertion violation happens here.
-       --> src/BecReentrancy.sol:135:9:
-        |
-    135 |         assert(_allowed[msg.sender][_spender] >= previousAllowance);
-        |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-## Race Condition na Função `approve`
+## Race Condition na Função `approve` e `transferFrom` 
 
 A **race condition** ocorre quando a execução do contrato depende da ordem de execução de transações concorrentes, o que pode levar a comportamentos inesperados se essas transações não forem geridas adequadamente.
 
 ### Cenário de Ataque
 
-A race condition pode ocorrer na função `approve` porque o contrato permite que um endereço (`_spender`) gaste um valor específico de tokens em nome do proprietário (`msg.sender`). O problema surge quando o valor permitido (`allowance`) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada.
+A race condition pode ocorrer na função `approve` e `transferFrom` porque o contrato permite que um endereço (`_spender`) gaste um valor específico de tokens em nome do proprietário (`msg.sender`). O problema surge quando o valor permitido (`allowance`) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada. De acordo com a [documentação](https://docs.soliditylang.org/en/latest/smtchecker.html) do SMT Checker, é dito que a ferramenta é capaz de identificar problemas concorrentes(conforme foi verificado no experimento anterior). Contudo, em todos os asserts do `BecReentrancy.sol`, foram considerados seguros.
 
-### Exemplo
+### Prova por teste
 
-1. **Estado Inicial:** O proprietário aprova um valor de `1000` para o `_spender`.
-2. **Ataque:** Um contrato malicioso detecta a chamada e aprova um valor de `5000` para o mesmo `_spender`.
-3. **Resultado:** O atacante pode gastar `1000` tokens antes que o valor seja atualizado para `5000`.
+Em dúvida, resolvi aplicar um teste, `TestRaceConditional.t.sol`, disponível no `test`. Após rodar o teste, minhas suspeitas foram confirmadas:
+       
+    Ran 1 test for test/testReentrancy.t.sol:RaceConditionTest
+    [FAIL. Reason: revert: Allowance exceeded] testRaceCondition() (gas: 75038)
+    Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 861.90µs (86.27µs CPU time)
+    
+    Ran 1 test suite in 5.69ms (861.90µs CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
+    
+    Failing tests:
+    Encountered 1 failing test in test/testReentrancy.t.sol:RaceConditionTest
+    [FAIL. Reason: revert: Allowance exceeded] testRaceCondition() (gas: 75038)
+    
+    Encountered a total of 1 failing tests, 0 tests succeeded
 
 ### Prevenção
 
