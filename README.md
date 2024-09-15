@@ -170,10 +170,6 @@ Para mitigar esse problema, recomenda-se:
     }
 
 
-Ao aplicar esse contrato ao [ERCx](https://ercx.runtimeverification.com/), os resultados não só se repetem, como ele também identifica novas vulnerabilidades:
-
-![Imagem do Projeto](https://github.com/manvillarim/Beauty-Chain_Audit/blob/main/lib/imagem.png)
-
 
 # Outras Vulnerabilidades
 
@@ -182,12 +178,3 @@ Também foi analisado outras possíveis vulnerabilidades, como inconsistência d
 # Resultados
 
 **Nota-se que o BeautyChain tem diversas vulnerabilidades, demonstrando que mesmo na blockchain, um contrato não está livre de erros e, consequentemente, há grandes riscos em sua utilização. Além disso, mesmo sem ter capacidade de analisar contratos longos de forma inteira, o SMT Checker se prova como uma ferramenta poderosa para auditar contratos.**
-
-
-
-
-
-
-
-
-
