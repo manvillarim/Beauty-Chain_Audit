@@ -175,7 +175,7 @@ Também foi analisado outras possíveis vulnerabilidades, como inconsistência d
 # ERCx
 
 Para informações adicionais, o contrato também foi aplicado no [ERCx](https://ercx.runtimeverification.com/). Os resultados confirmaram a auditoria e também levantaram outros pontos(não necessariamente vulnerabilidades).
-[imagem](https://github.com/manvillarim/Beauty-Chain_Audit/blob/main/lib/imagem.png)
+![imagem](https://github.com/manvillarim/Beauty-Chain_Audit/blob/main/lib/imagem.png)
 
 # Resultados
 
