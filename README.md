@@ -128,7 +128,7 @@ A **race condition** ocorre quando a execução do contrato depende da ordem de 
 
 ### Cenário de Ataque
 
-A race condition pode ocorrer na função `approve` e `transferFrom` porque o contrato permite que um endereço (`_spender`) gaste um valor específico de tokens em nome do proprietário (`msg.sender`). O problema surge quando o valor permitido (`allowance`) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada. De acordo com a [documentação](https://docs.soliditylang.org/en/latest/smtchecker.html) do SMT Checker, é dito que a ferramenta é capaz de identificar problemas concorrentes(conforme foi verificado no experimento anterior). Contudo, em todos os asserts do `BecReentrancy.sol`, foram considerados seguros.
+A race condition pode ocorrer na função `approve` e `transferFrom` porque o contrato permite que um endereço (`_spender`) gaste um valor específico de tokens em nome do proprietário (`msg.sender`). O problema surge quando o valor permitido (`allowance`) é alterado em uma transação, e uma segunda transação também tenta alterar o valor permitido para o mesmo endereço antes que a primeira transação seja completada. De acordo com a [documentação](https://docs.soliditylang.org/en/latest/smtchecker.html) do SMT Checker, é dito que a ferramenta é capaz de identificar problemas concorrentes(conforme foi verificado no experimento anterior). Todos os asserts do `BecReentrancy.sol`, foram considerados seguros.
 
 ### Prova por teste
 
