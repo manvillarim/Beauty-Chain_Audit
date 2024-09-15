@@ -32,7 +32,7 @@ contract RaceConditionTest is Test {
         uint256 finalBalance = token.balanceOf(user2);
         uint256 remainingAllowance = token.allowance(user1, spender);
 
-        // Asserções para verificar a condição de corrida
+        // Asserções para verificar a race condition
         assert(finalBalance <= 500); // O saldo não deve exceder a permissão inicial
         assert(remainingAllowance >= 0); // A permissão não deve ser negativa
     }
