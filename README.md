@@ -154,7 +154,6 @@ Para mitigar esse problema, recomenda-se:
 
 - **Resetar a Allowance:** 
   - Para uma solução simples, o ideal é definir a allowance atual para zero no inicio de cada transação. Isso evita que valores antigos sejam utilizados enquanto uma nova transação está pendente.
-  - Contudo, essa forma gera um gasto desnecessário de gás. Uma solução comum é a criação de funções increaseAllowance e decreaseAllowance.
 
     ```solidity
     function approve(address _spender, uint256 _value) public virtual override returns (bool) {
@@ -169,6 +168,7 @@ Para mitigar esse problema, recomenda-se:
         return true;
     }
 
+  - Contudo, essa forma gera um gasto desnecessário de gás. Uma solução comum é a criação de funções increaseAllowance e decreaseAllowance.
 
 
 # Outras Vulnerabilidades
