@@ -174,4 +174,4 @@ Também foi analisado outras possíveis vulnerabilidades, como inconsistência d
 
 # Resultados
 
-**Nota-se que o SMT Checker é uma ferramenta poderosa para auditar contratos, mesmo com a limitação do tamanho do código. Além disso, a falha de encontrar a race condition leventa questões interessantes sobre a abordargem de vulnerabilidades concorrentes, que será explorado nos próximos experimentos.**
+**Nota-se que o SMT Checker é uma ferramenta poderosa para auditar contratos, mesmo com a limitação do tamanho do código. Além disso, a falha de encontrar a race condition levanta questões interessantes sobre a abordargem de vulnerabilidades concorrentes, que será explorado nos próximos experimentos.**
