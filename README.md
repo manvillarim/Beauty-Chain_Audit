@@ -78,6 +78,27 @@ Outra possível vulnerabilidade seria se algum endereço do array `_receivers` f
     253 |             assert(_receivers[i] != address(0));
         |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Além disso, outro overflow foi identificado no contrato `BecToken`:
+
+    Warning (4984): CHC: Overflow (resulting value larger than 2**256 - 1) happens here.
+    Counterexample:
+    name = [0x42, 0x65, 0x61, 0x75, 0x74, 0x79, 0x43, 0x68, 0x61, 0x69, 0x6e], symbol = [0x42, 0x45, 0x43], version = [0x31, 0x2e, 0x30, 0x2e, 0x30], decimals = 18, _totalSupply = 0
+    initialSupply = 0
+    
+    Transaction trace:
+    BecToken.constructor(){ msg.sender: 0x7e1d }
+    Warning: CHC: Overflow (resulting value larger than 2**256 - 1) happens here.
+    Counterexample:
+    name = [0x42, 0x65, 0x61, 0x75, 0x74, 0x79, 0x43, 0x68, 0x61, 0x69, 0x6e], symbol = [0x42, 0x45, 0x43], version = [0x31, 0x2e, 0x30, 0x2e, 0x30], decimals = 18, _totalSupply = 0
+    initialSupply = 0
+    
+    Transaction trace:
+    BecToken.constructor(){ msg.sender: 0x7e1d }
+       --> src/Bec.sol:280:33:
+        |
+    280 |         uint256 initialSupply = 7000000000 * (10**uint256(decimals));
+        |   
+
 # ERC20
 
 Em uma primeira análise, ao verificar o contrato `StandartToken`, também é notada uma possível vulnerabilidade da função `approve`, ao não restringir o endereço do `spender` ser diferente de nulo. 
