@@ -152,14 +152,14 @@ A race condition pode ocorrer na função `approve` e `transferFrom` porque o co
 
 Em dúvida, resolvi aplicar um teste, `TestRaceConditional.t.sol`, disponível no `test`. Após rodar o teste, minhas suspeitas foram confirmadas:
        
-    [FAIL. Reason: assertion failed: 0 != 300] testRaceCondition() (gas: 49867)
+    [FAIL. Reason: assertion failed: 0 != 500] testRaceCondition() (gas: 49867)
     Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 681.91µs (167.29µs CPU time)
     
     Ran 1 test suite in 10.40ms (681.91µs CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
     
     Failing tests:
     Encountered 1 failing test in test/TestRaceCondition.t.sol:StandardTokenTest
-    [FAIL. Reason: assertion failed: 0 != 300] testRaceCondition() (gas: 49867)
+    [FAIL. Reason: assertion failed: 0 != 500] testRaceCondition() (gas: 49867)
     
     Encountered a total of 1 failing tests, 0 tests succeeded
 
