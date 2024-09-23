@@ -26,14 +26,16 @@ contract StandardTokenTest is Test {
         vm.prank(addr1);
         token.approve(addr2, 500);
 
-        vm.prank(addr1);
-        token.approve(addr2, 300);
+        vm.prank(addr2);
+        token.approve(addr1, 300);
 
 
-        uint256 finalAllowance = token.allowance(owner, addr2);
-        
+        uint256 finalAllowanceAddr2 = token.allowance(owner, addr2);
+        uint256 finalAllowanceAddr1 = token.allowance(owner, addr1);
 
-        assertEq(finalAllowance, 300);
+        assertEq(finalAllowanceAddr2, 500); 
+        assertEq(finalAllowanceAddr1, 300); 
     }
+
 
 }
